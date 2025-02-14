@@ -1,6 +1,7 @@
 import requests
 import time
 import csv
+import numpy as np
 from datetime import datetime
 
 # URL de l'API
@@ -19,8 +20,21 @@ def get_wind_data():
         print("Erreur lors de la récupération des données :", response.status_code)
         return None, None
 
+# Fonction pour calculer la moyenne des directions en tenant compte de la circularité
+def moyenne_direction(angles):
+    angles_rad = np.radians(angles)  # Convertir en radians
+    x = np.cos(angles_rad)
+    y = np.sin(angles_rad)
 
-# Prendre 5 mesures espacées de 10 secondes
+    x_moy = np.mean(x)
+    y_moy = np.mean(y)
+
+    angle_moyen_rad = np.arctan2(y_moy, x_moy)
+    angle_moyen_deg = np.degrees(angle_moyen_rad)
+
+    return angle_moyen_deg % 360  # Assurer un angle entre 0 et 360°
+
+# Prendre 5 mesures espacées de 6 secondes
 directions = []
 speeds = []
 for i in range(5):
@@ -29,11 +43,11 @@ for i in range(5):
         directions.append(direction)
         speeds.append(speed)
     print(f"Mesure {i + 1} - Direction : {direction}° | Vitesse : {speed} km/h")
-    time.sleep(6)  # Pause de 10 secondes entre chaque mesure
+    time.sleep(6)  # Pause de 6 secondes entre chaque mesure
 
 # Calcul de la moyenne
 if directions and speeds:
-    avg_direction = round(sum(directions) / len(directions), 2)
+    avg_direction = round(moyenne_direction(directions), 2)  # Utilisation de la moyenne vectorielle
     avg_speed = round(sum(speeds) / len(speeds), 2)
 
     # Enregistrement dans un fichier CSV
