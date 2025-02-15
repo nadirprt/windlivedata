@@ -3,6 +3,7 @@ import time
 import csv
 import numpy as np
 from datetime import datetime
+from datetime import datetime, timedelta
 
 # URL de l'API
 api_url = "https://pubs.diabox.com/dataUpdate.php?dbx_id=105&dataNameList%5B%5D=pacific_temperature&dataNameList%5B%5D=pacific_pressure&dataNameList%5B%5D=pacific_wind_rt&dataNameList%5B%5D=pacific_humidity&dataNameList%5B%5D=pacific_rainRate"
@@ -54,7 +55,7 @@ if directions and speeds:
     csv_file = "wind_data.csv"
     with open(csv_file, mode="a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), int(avg_direction), int(avg_speed)])
+        writer.writerow([(datetime.now() + timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"), int(avg_direction), int(avg_speed)])
 
     print(f"\nMoyenne - Direction : {avg_direction}° | Vitesse : {avg_speed} km/h")
 else:
