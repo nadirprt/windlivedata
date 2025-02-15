@@ -3,7 +3,7 @@ name: Wind Data Logger
 on:  
   schedule:  
     - cron: '50 05 * * *'  # Exécute à 12h UTC chaque jour  
-    - cron: '20 11 * * *'  # Exécute à 16h UTC chaque jour  
+    - cron: '55 11 * * *'  # Exécute à 16h UTC chaque jour  
     - cron: '50 17 * * *'  # Exécute à 20h UTC chaque jour  
 
   workflow_dispatch:  # Permet de lancer le script manuellement  
