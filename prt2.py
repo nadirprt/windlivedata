@@ -55,7 +55,7 @@ if directions and speeds:
     csv_file = "wind_data.csv"
     with open(csv_file, mode="a", newline="") as file:
         writer = csv.writer(file)
-        writer.writerow([(datetime.now() + timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"), int(avg_direction), int(avg_speed)])
+        writer.writerow([(datetime.now() + timedelta(hours=1)).strftime("%Y-%m-%d %H:%M:%S"), int(avg_direction), avg_speed])
 
     print(f"\nMoyenne - Direction : {avg_direction}° | Vitesse : {avg_speed} km/h")
 else:
